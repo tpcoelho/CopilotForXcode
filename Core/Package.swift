@@ -122,7 +122,6 @@ let package = Package(
             dependencies: [
                 "Client",
                 "GitHubCopilotService",
-                "CodeiumService",
                 "SuggestionModel",
                 "LaunchAgentManager",
                 .product(name: "MarkdownUI", package: "swift-markdown-ui"),
@@ -159,7 +158,6 @@ let package = Package(
         ),
         .target(name: "SuggestionService", dependencies: [
             "GitHubCopilotService",
-            "CodeiumService",
             "UserDefaultsObserver",
         ]),
 
@@ -316,20 +314,6 @@ let package = Package(
         .testTarget(
             name: "GitHubCopilotServiceTests",
             dependencies: ["GitHubCopilotService"]
-        ),
-
-        // MARK: - Codeium
-
-        .target(
-            name: "CodeiumService",
-            dependencies: [
-                "LanguageClient",
-                "SuggestionModel",
-                "KeychainAccess",
-                "XcodeInspector",
-                .product(name: "Preferences", package: "Tool"),
-                .product(name: "Terminal", package: "Tool"),
-            ]
         ),
 
         // MARK: - Chat Plugins

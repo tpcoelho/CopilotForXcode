@@ -56,11 +56,6 @@ public actor SuggestionService: SuggestionServiceType {
 
     func buildService() -> SuggestionServiceProvider {
         switch serviceType {
-        case .codeium:
-            return CodeiumSuggestionProvider(
-                projectRootURL: projectRootURL,
-                onServiceLaunched: onServiceLaunched
-            )
         case .gitHubCopilot:
             return GitHubCopilotSuggestionProvider(
                 projectRootURL: projectRootURL,

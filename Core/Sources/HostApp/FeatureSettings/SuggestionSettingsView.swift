@@ -47,8 +47,6 @@ struct SuggestionSettingsView: View {
                         switch $0 {
                         case .gitHubCopilot:
                             Text("GitHub Copilot").tag($0)
-                        case .codeium:
-                            Text("Codeium").tag($0)
                         }
                     }
                 } label: {

@@ -166,14 +166,6 @@ public extension UserDefaultPreferenceKeys {
     }
 }
 
-// MARK: - Codeium Settings
-
-public extension UserDefaultPreferenceKeys {
-    var codeiumVerboseLog: PreferenceKey<Bool> {
-        .init(defaultValue: false, key: "CodeiumVerboseLog")
-    }
-}
-
 // MARK: - Prompt to Code
 
 public extension UserDefaultPreferenceKeys {
