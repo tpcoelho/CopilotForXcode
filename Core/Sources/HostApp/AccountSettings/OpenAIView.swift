@@ -48,7 +48,11 @@ struct OpenAIView: View {
                 Button("Test") {
                     Task { @MainActor in
                         isTesting = true
-                        defer { isTesting = false }
+                        defer {
+                            Task { @MainActor in
+                                isTesting = false
+                            }
+                        }
                         do {
                             let reply =
                                 try await ChatGPTService(
@@ -83,7 +87,7 @@ struct OpenAIView: View {
                     Image(systemName: "questionmark.circle.fill")
                 }.buttonStyle(.plain)
             }
-            
+
             HStack {
                 Picker(selection: $settings.embeddingModel) {
                     if !settings.embeddingModel.isEmpty,

@@ -43,7 +43,11 @@ struct AzureView: View {
                 Button("Test") {
                     Task { @MainActor in
                         isTesting = true
-                        defer { isTesting = false }
+                        defer {
+                            Task { @MainActor in
+                                isTesting = false
+                            }
+                        }
                         do {
                             let reply =
                                 try await ChatGPTService(
@@ -59,7 +63,7 @@ struct AzureView: View {
                 }
                 .disabled(isTesting)
             }
-            
+
             HStack {
                 TextField(
                     text: $settings.azureEmbeddingDeployment,

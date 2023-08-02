@@ -129,7 +129,7 @@ final class Workspace {
             "Suggestion feature is disabled for this project."
         }
     }
-    
+
     struct UnsupportedFileError: Error, LocalizedError {
         var extensionName: String
         var errorDescription: String? {
@@ -175,8 +175,8 @@ final class Workspace {
             _suggestionService = SuggestionService(projectRootURL: projectRootURL) {
                 [weak self] _ in
                 guard let self else { return }
-                for (_, filespace) in filespaces {
-                    notifyOpenFile(filespace: filespace)
+                for (_, filespace) in self.filespaces {
+                    self.notifyOpenFile(filespace: filespace)
                 }
             }
         }
@@ -234,7 +234,7 @@ final class Workspace {
         if ignoreFileExtensions.contains(fileURL.pathExtension) {
             throw UnsupportedFileError(extensionName: fileURL.pathExtension)
         }
-        
+
         // If we know which project is opened.
         if let currentProjectURL = try await Environment.fetchCurrentProjectRootURLFromXcode() {
             if let existed = workspaces[currentProjectURL] {
@@ -287,7 +287,7 @@ final class Workspace {
         let filespace = existedFilespace ?? .init(fileURL: fileURL, onSave: { [weak self]
             filespace in
                 guard let self else { return }
-                notifySaveFile(filespace: filespace)
+                self.notifySaveFile(filespace: filespace)
         })
         if filespaces[fileURL] == nil {
             filespaces[fileURL] = filespace
@@ -418,8 +418,8 @@ extension Workspace {
                 .attributesOfItem(atPath: filespace.fileURL.path),
                 let fileSize = attrs[FileAttributeKey.size] as? UInt64,
                 fileSize > 15 * 1024 * 1024
-            { return } 
-            
+            { return }
+
             try await suggestionService?.notifyOpenTextDocument(
                 fileURL: filespace.fileURL,
                 content: try String(contentsOf: filespace.fileURL, encoding: .utf8)

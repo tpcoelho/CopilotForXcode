@@ -106,14 +106,14 @@ public final class XcodeInspector: ObservableObject {
 
         let setFocusedElement = { [weak self] in
             guard let self else { return }
-            focusedElement = xcode.appElement.focusedElement
-            if let editorElement = focusedElement, editorElement.isSourceEditor {
-                focusedEditor = .init(
+            self.focusedElement = xcode.appElement.focusedElement
+            if let editorElement = self.focusedElement, editorElement.isSourceEditor {
+                self.focusedEditor = .init(
                     runningApplication: xcode.runningApplication,
                     element: editorElement
                 )
             } else {
-                focusedEditor = nil
+                self.focusedEditor = nil
             }
         }
 

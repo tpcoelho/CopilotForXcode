@@ -49,7 +49,7 @@ public actor SuggestionService: SuggestionServiceType {
         providerChangeObserver.onChange = { [weak self] in
             Task { [weak self] in
                 guard let self else { return }
-                await rebuildService()
+                await self.rebuildService()
             }
         }
     }

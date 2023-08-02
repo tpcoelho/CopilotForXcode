@@ -286,7 +286,11 @@ struct CopilotView: View {
     func checkStatus() {
         Task {
             isRunningAction = true
-            defer { isRunningAction = false }
+            defer {
+                Task { @MainActor in
+                    isRunningAction = false
+                }
+            }
             do {
                 let service = try getGitHubCopilotAuthService()
                 status = try await service.checkStatus()
@@ -310,7 +314,11 @@ struct CopilotView: View {
     func signIn() {
         Task {
             isRunningAction = true
-            defer { isRunningAction = false }
+            defer {
+                Task { @MainActor in
+                    isRunningAction = false
+                }
+            }
             do {
                 let service = try getGitHubCopilotAuthService()
                 let (uri, userCode) = try await service.signInInitiate()
@@ -334,7 +342,11 @@ struct CopilotView: View {
     func confirmSignIn() {
         Task {
             isRunningAction = true
-            defer { isRunningAction = false }
+            defer {
+                Task { @MainActor in
+                    isRunningAction = false
+                }
+            }
             do {
                 let service = try getGitHubCopilotAuthService()
                 guard let userCode else {
@@ -353,7 +365,11 @@ struct CopilotView: View {
     func signOut() {
         Task {
             isRunningAction = true
-            defer { isRunningAction = false }
+            defer {
+                Task { @MainActor in
+                    isRunningAction = false
+                }
+            }
             do {
                 let service = try getGitHubCopilotAuthService()
                 status = try await service.signOut()
