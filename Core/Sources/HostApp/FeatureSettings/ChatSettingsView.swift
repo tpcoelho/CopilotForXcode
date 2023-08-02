@@ -52,7 +52,6 @@ struct ChatSettingsView: View {
                 selection: $settings.chatFeatureProvider
             ) {
                 Text("OpenAI").tag(ChatFeatureProvider.openAI)
-                Text("Azure OpenAI").tag(ChatFeatureProvider.azureOpenAI)
             }
             
             Picker(
@@ -60,7 +59,6 @@ struct ChatSettingsView: View {
                 selection: $settings.embeddingFeatureProvider
             ) {
                 Text("OpenAI").tag(EmbeddingFeatureProvider.openAI)
-                Text("Azure OpenAI").tag(EmbeddingFeatureProvider.azureOpenAI)
             }
 
             if #available(macOS 13.0, *) {
@@ -266,8 +264,6 @@ struct ChatSettingsView: View {
             } else {
                 maxTokenOverLimit = false
             }
-        case .azureOpenAI:
-            maxTokenOverLimit = false
         }
     }
 }

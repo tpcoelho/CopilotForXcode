@@ -106,26 +106,6 @@ public extension UserDefaultPreferenceKeys {
     }
 }
 
-// MARK: - Azure OpenAI Settings
-
-public extension UserDefaultPreferenceKeys {
-    var azureOpenAIAPIKey: PreferenceKey<String> {
-        .init(defaultValue: "", key: "AzureOpenAIAPIKey")
-    }
-
-    var azureOpenAIBaseURL: PreferenceKey<String> {
-        .init(defaultValue: "", key: "AzureOpenAIBaseURL")
-    }
-
-    var azureChatGPTDeployment: PreferenceKey<String> {
-        .init(defaultValue: "", key: "AzureChatGPTDeployment")
-    }
-
-    var azureEmbeddingDeployment: PreferenceKey<String> {
-        .init(defaultValue: "", key: "AzureEmbeddingDeployment")
-    }
-}
-
 // MARK: - GitHub Copilot Settings
 
 public extension UserDefaultPreferenceKeys {

@@ -16,12 +16,6 @@ public extension EmbeddingConfiguration {
             let baseURL = UserDefaults.shared.value(for: \.openAIBaseURL)
             if baseURL.isEmpty { return "https://api.openai.com/v1/embeddings" }
             return "\(baseURL)/v1/embeddings"
-        case .azureOpenAI:
-            let baseURL = UserDefaults.shared.value(for: \.azureOpenAIBaseURL)
-            let deployment = UserDefaults.shared.value(for: \.azureChatGPTDeployment)
-            let version = "2023-05-15"
-            if baseURL.isEmpty { return "" }
-            return "\(baseURL)/openai/deployments/\(deployment)/embeddings?api-version=\(version)"
         }
     }
 
@@ -29,8 +23,6 @@ public extension EmbeddingConfiguration {
         switch provider {
         case .openAI:
             return UserDefaults.shared.value(for: \.openAIAPIKey)
-        case .azureOpenAI:
-            return UserDefaults.shared.value(for: \.azureOpenAIAPIKey)
         }
     }
 

@@ -20,12 +20,6 @@ public extension ChatGPTConfiguration {
             let baseURL = UserDefaults.shared.value(for: \.openAIBaseURL)
             if baseURL.isEmpty { return "https://api.openai.com/v1/chat/completions" }
             return "\(baseURL)/v1/chat/completions"
-        case .azureOpenAI:
-            let baseURL = UserDefaults.shared.value(for: \.azureOpenAIBaseURL)
-            let deployment = UserDefaults.shared.value(for: \.azureChatGPTDeployment)
-            let version = "2023-05-15"
-            if baseURL.isEmpty { return "" }
-            return "\(baseURL)/openai/deployments/\(deployment)/chat/completions?api-version=\(version)"
         }
     }
 
@@ -33,8 +27,6 @@ public extension ChatGPTConfiguration {
         switch provider {
         case .openAI:
             return UserDefaults.shared.value(for: \.openAIAPIKey)
-        case .azureOpenAI:
-            return UserDefaults.shared.value(for: \.azureOpenAIAPIKey)
         }
     }
 

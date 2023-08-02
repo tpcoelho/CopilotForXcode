@@ -58,8 +58,6 @@ public struct EmbeddingService {
                     "Bearer \(configuration.apiKey)",
                     forHTTPHeaderField: "Authorization"
                 )
-            case .azureOpenAI:
-                request.setValue(configuration.apiKey, forHTTPHeaderField: "api-key")
             }
         }
 
@@ -96,8 +94,6 @@ public struct EmbeddingService {
                     "Bearer \(configuration.apiKey)",
                     forHTTPHeaderField: "Authorization"
                 )
-            case .azureOpenAI:
-                request.setValue(configuration.apiKey, forHTTPHeaderField: "api-key")
             }
         }
 

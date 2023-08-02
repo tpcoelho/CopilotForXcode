@@ -12,22 +12,13 @@ struct ServiceView: View {
                 subtitle: "Suggestion",
                 image: "globe"
             )
-            
+
 //
 //            ScrollView {
 //                OpenAIView().padding()
 //            }.sidebarItem(
 //                tag: 2,
 //                title: "OpenAI",
-//                subtitle: "Chat, Prompt to Code",
-//                image: "globe"
-//            )
-//
-//            ScrollView {
-//                AzureView().padding()
-//            }.sidebarItem(
-//                tag: 3,
-//                title: "Azure",
 //                subtitle: "Chat, Prompt to Code",
 //                image: "globe"
 //            )
