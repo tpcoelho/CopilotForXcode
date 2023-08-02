@@ -7,7 +7,6 @@ import Service
 import ServiceManagement
 import ServiceUpdateMigration
 import SwiftUI
-import UpdateChecker
 import UserDefaultsObserver
 import UserNotifications
 import XcodeInspector
@@ -21,11 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     let scheduledCleaner = ScheduledCleaner()
     var statusBarItem: NSStatusItem!
     var xpcListener: (NSXPCListener, ServiceDelegate)?
-    let updateChecker =
-        UpdateChecker(
-            hostBundle: locateHostBundleURL(url: Bundle.main.bundleURL)
-                .flatMap(Bundle.init(url:))
-        )
 
     func applicationDidFinishLaunching(_: Notification) {
         if ProcessInfo.processInfo.environment["IS_UNIT_TEST"] == "YES" { return }
@@ -140,10 +134,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         AXIsProcessTrustedWithOptions([
             kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true,
         ] as NSDictionary)
-    }
-
-    @objc func checkForUpdate() {
-        updateChecker.checkForUpdates()
     }
 }
 

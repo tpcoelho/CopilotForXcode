@@ -21,7 +21,6 @@ struct GeneralView: View {
 
 struct AppInfoView: View {
     @State var appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    @Environment(\.updateChecker) var updateChecker
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -35,17 +34,6 @@ struct AppInfoView: View {
                 Text(appVersion ?? "")
                     .font(.footnote)
                     .foregroundColor(.secondary)
-
-                Spacer()
-
-                Button(action: {
-                    updateChecker.checkForUpdates()
-                }) {
-                    HStack(spacing: 2) {
-                        Image(systemName: "arrow.up.right.circle.fill")
-                        Text("Check for Updates")
-                    }
-                }
             }
 
             HStack(spacing: 16) {
@@ -234,19 +222,11 @@ struct GeneralSettingsView: View {
     }
 
     @StateObject var settings = Settings()
-    @Environment(\.updateChecker) var updateChecker
 
     var body: some View {
         Form {
             Toggle(isOn: $settings.quitXPCServiceOnXcodeAndAppQuit) {
                 Text("Quit service when Xcode and host app are terminated")
-            }
-
-            Toggle(isOn: .init(
-                get: { updateChecker.automaticallyChecksForUpdates },
-                set: { updateChecker.automaticallyChecksForUpdates = $0 }
-            )) {
-                Text("Automatically Check for Update")
             }
 
             Picker(selection: $settings.suggestionWidgetPositionMode) {

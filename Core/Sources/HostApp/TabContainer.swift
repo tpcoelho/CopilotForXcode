@@ -1,8 +1,6 @@
 import Foundation
 import LaunchAgentManager
 import SwiftUI
-import UpdateChecker
-
 enum Tab: Int, CaseIterable, Equatable {
     case general
     case service
@@ -176,17 +174,6 @@ struct TabBarButton: View {
 }
 
 // MARK: - Environment Keys
-
-struct UpdateCheckerKey: EnvironmentKey {
-    static var defaultValue: UpdateChecker = .init(hostBundle: nil)
-}
-
-public extension EnvironmentValues {
-    var updateChecker: UpdateChecker {
-        get { self[UpdateCheckerKey.self] }
-        set { self[UpdateCheckerKey.self] = newValue }
-    }
-}
 
 enum ToastType {
     case info

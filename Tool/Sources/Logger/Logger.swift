@@ -14,7 +14,6 @@ public final class Logger {
     public static let service = Logger(category: "Service")
     public static let ui = Logger(category: "UI")
     public static let client = Logger(category: "Client")
-    public static let updateChecker = Logger(category: "UpdateChecker")
     public static let gitHubCopilot = Logger(category: "GitHubCopilot")
     public static let codeium = Logger(category: "Codeium")
     public static let langchain = Logger(category: "LangChain")

@@ -32,12 +32,6 @@ extension AppDelegate {
             keyEquivalent: ""
         )
 
-        let checkForUpdate = NSMenuItem(
-            title: "Check for Updates",
-            action: #selector(checkForUpdate),
-            keyEquivalent: ""
-        )
-
         let openCopilotForXcode = NSMenuItem(
             title: "Open \(hostAppName)",
             action: #selector(openCopilotForXcode),
@@ -70,7 +64,6 @@ extension AppDelegate {
 
         statusBarMenu.addItem(copilotName)
         statusBarMenu.addItem(openCopilotForXcode)
-        statusBarMenu.addItem(checkForUpdate)
         statusBarMenu.addItem(.separator())
         statusBarMenu.addItem(openGlobalChat)
         statusBarMenu.addItem(.separator())
