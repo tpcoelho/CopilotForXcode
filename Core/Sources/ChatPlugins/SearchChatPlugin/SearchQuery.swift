@@ -1,4 +1,3 @@
-import BingSearchService
 import Foundation
 import LangChain
 import OpenAIService
@@ -13,10 +12,6 @@ enum SearchEvent {
 func search(_ query: String) async throws
     -> (stream: AsyncThrowingStream<SearchEvent, Error>, cancel: () async -> Void)
 {
-    let bingSearch = BingSearchService(
-        subscriptionKey: UserDefaults.shared.value(for: \.bingSearchSubscriptionKey),
-        searchURL: UserDefaults.shared.value(for: \.bingSearchEndpoint)
-    )
 
     final class LinkStorage {
         var links = [(title: String, link: String)]()
@@ -28,16 +23,8 @@ func search(_ query: String) async throws
         SimpleAgentTool(
             name: "Search",
             description: "useful for when you need to answer questions about current events. Don't search for the same thing twice",
-            run: {
-                linkStorage.links = []
-                let result = try await bingSearch.search(query: $0, numberOfResult: 5)
-                let websites = result.webPages.value
-
+            run: {_ in 
                 var string = ""
-                for (index, website) in websites.enumerated() {
-                    string.append("[\(index)]:###\(website.snippet)###\n")
-                    linkStorage.links.append((website.name, website.url))
-                }
                 return string
             }
         ),

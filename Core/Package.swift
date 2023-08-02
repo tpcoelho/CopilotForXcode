@@ -334,7 +334,6 @@ let package = Package(
                 "ChatPlugin",
                 .product(name: "OpenAIService", package: "Tool"),
                 .product(name: "LangChain", package: "Tool"),
-                .product(name: "ExternalServices", package: "Tool"),
             ],
             path: "Sources/ChatPlugins/SearchChatPlugin"
         ),
@@ -357,7 +356,6 @@ let package = Package(
                 "ChatContextCollector",
                 .product(name: "LangChain", package: "Tool"),
                 .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "ExternalServices", package: "Tool"),
                 .product(name: "Preferences", package: "Tool"),
             ],
             path: "Sources/ChatContextCollectors/WebChatContextCollector"

@@ -1,9 +1,12 @@
-import BingSearchService
 import Foundation
 import OpenAIService
 import Preferences
 
 struct SearchFunction: ChatGPTFunction {
+    func call(arguments: Arguments) async throws -> Result {
+        return Result()
+    }
+
     static let dateFormatter = {
         let it = DateFormatter()
         it.dateFormat = "yyyy-MM-dd"
@@ -16,16 +19,9 @@ struct SearchFunction: ChatGPTFunction {
     }
 
     struct Result: ChatGPTFunctionResult {
-        var result: BingSearchResult
 
         var botReadableContent: String {
-            result.webPages.value.enumerated().map {
-                let (index, page) = $0
-                return """
-                \(index + 1). \(page.name) \(page.url)
-                \(page.snippet)
-                """
-            }.joined(separator: "\n")
+            return ""
         }
     }
 
@@ -62,36 +58,6 @@ struct SearchFunction: ChatGPTFunction {
 
     func prepare() async {
         await reportProgress("Searching..")
-    }
-
-    func call(arguments: Arguments) async throws -> Result {
-        await reportProgress("Searching \(arguments.query)")
-
-        do {
-            let bingSearch = BingSearchService(
-                subscriptionKey: UserDefaults.shared.value(for: \.bingSearchSubscriptionKey),
-                searchURL: UserDefaults.shared.value(for: \.bingSearchEndpoint)
-            )
-            let result = try await bingSearch.search(
-                query: arguments.query,
-                numberOfResult: UserDefaults.shared.value(for: \.chatGPTMaxToken) > 5000 ? 5 : 3,
-                freshness: arguments.freshness
-            )
-
-            await reportProgress("""
-            Finish searching \(arguments.query)
-            \(
-                result.webPages.value
-                    .map { "- [\($0.name)](\($0.url))" }
-                    .joined(separator: "\n")
-            )
-            """)
-
-            return .init(result: result)
-        } catch {
-            await reportProgress("Failed searching: \(error.localizedDescription)")
-            throw error
-        }
     }
 }
 

@@ -9,7 +9,6 @@ let package = Package(
     products: [
         .library(name: "Terminal", targets: ["Terminal"]),
         .library(name: "LangChain", targets: ["LangChain"]),
-        .library(name: "ExternalServices", targets: ["BingSearchService"]),
         .library(name: "Preferences", targets: ["Preferences", "Configs"]),
         .library(name: "Logger", targets: ["Logger"]),
         .library(name: "OpenAIService", targets: ["OpenAIService"]),
@@ -67,8 +66,6 @@ let package = Package(
                 .product(name: "SwiftSoup", package: "SwiftSoup"),
             ]
         ),
-
-        .target(name: "BingSearchService"),
 
         // MARK: - OpenAI
 
