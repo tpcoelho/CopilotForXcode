@@ -184,11 +184,6 @@ let package = Package(
                 "Environment",
                 "XcodeInspector",
 
-                // plugins
-                "MathChatPlugin",
-                "SearchChatPlugin",
-                "ShortcutChatPlugin",
-
                 // context collectors
                 "WebChatContextCollector",
 
@@ -314,38 +309,6 @@ let package = Package(
         .testTarget(
             name: "GitHubCopilotServiceTests",
             dependencies: ["GitHubCopilotService"]
-        ),
-
-        // MARK: - Chat Plugins
-
-        .target(
-            name: "MathChatPlugin",
-            dependencies: [
-                "ChatPlugin",
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "LangChain", package: "Tool"),
-            ],
-            path: "Sources/ChatPlugins/MathChatPlugin"
-        ),
-
-        .target(
-            name: "SearchChatPlugin",
-            dependencies: [
-                "ChatPlugin",
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "LangChain", package: "Tool"),
-            ],
-            path: "Sources/ChatPlugins/SearchChatPlugin"
-        ),
-
-        .target(
-            name: "ShortcutChatPlugin",
-            dependencies: [
-                "ChatPlugin",
-                .product(name: "Parsing", package: "swift-parsing"),
-                .product(name: "Terminal", package: "Tool"),
-            ],
-            path: "Sources/ChatPlugins/ShortcutChatPlugin"
         ),
 
         // MAKR: - Chat Context Collector
