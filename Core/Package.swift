@@ -179,7 +179,6 @@ let package = Package(
         .target(
             name: "ChatService",
             dependencies: [
-                "ChatPlugin",
                 "Environment",
                 "XcodeInspector",
 
@@ -189,14 +188,6 @@ let package = Package(
             ]
         ),
         .testTarget(name: "ChatServiceTests", dependencies: ["ChatService"]),
-        .target(
-            name: "ChatPlugin",
-            dependencies: [
-                "Environment",
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "Terminal", package: "Tool"),
-            ]
-        ),
 
         .target(
             name: "ChatTab",

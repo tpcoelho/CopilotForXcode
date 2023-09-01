@@ -1,4 +1,3 @@
-import ChatPlugin
 import Combine
 import Foundation
 import OpenAIService
@@ -8,13 +7,12 @@ public final class ChatService: ObservableObject {
     public let memory: AutoManagedChatGPTMemory
     public let configuration: OverridingChatGPTConfiguration<UserPreferenceChatGPTConfiguration>
     public let chatGPTService: any ChatGPTServiceType
-    public var allPluginCommands: [String] { allPlugins.map { $0.command } }
+    public var allPluginCommands: [String] { [] }
     @Published public internal(set) var isReceivingMessage = false
     @Published public internal(set) var systemPrompt = UserDefaults.shared
         .value(for: \.defaultChatSystemPrompt)
     @Published public internal(set) var extraSystemPrompt = ""
 
-    let pluginController: ChatPluginController
     let contextController: DynamicContextController
     let functionProvider: ChatFunctionProvider
     var cancellable = Set<AnyCancellable>()
@@ -29,16 +27,12 @@ public final class ChatService: ObservableObject {
         self.configuration = configuration
         self.chatGPTService = chatGPTService
         self.functionProvider = functionProvider
-        pluginController = ChatPluginController(
-            chatGPTService: chatGPTService,
-            plugins: allPlugins
-        )
+
         contextController = DynamicContextController(
             memory: memory,
             functionProvider: functionProvider
         )
 
-        pluginController.chatService = self
     }
 
     public convenience init() {
@@ -67,8 +61,7 @@ public final class ChatService: ObservableObject {
 
     public func send(content: String) async throws {
         guard !isReceivingMessage else { throw CancellationError() }
-        let handledInPlugin = try await pluginController.handleContent(content)
-        if handledInPlugin { return }
+
         try await contextController.updatePromptToMatchContent(systemPrompt: """
         \(systemPrompt)
         \(extraSystemPrompt)
@@ -93,7 +86,6 @@ public final class ChatService: ObservableObject {
     }
 
     public func stopReceivingMessage() async {
-        await pluginController.stopResponding()
         await chatGPTService.stopReceivingMessage()
         isReceivingMessage = false
 
@@ -106,7 +98,6 @@ public final class ChatService: ObservableObject {
     }
 
     public func clearHistory() async {
-        await pluginController.cancel()
         await memory.clearHistory()
         await chatGPTService.stopReceivingMessage()
         isReceivingMessage = false
