@@ -1,4 +1,3 @@
-import ChatService
 import Environment
 import Foundation
 import GitHubCopilotService

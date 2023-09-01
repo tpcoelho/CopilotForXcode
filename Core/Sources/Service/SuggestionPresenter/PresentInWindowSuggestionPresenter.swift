@@ -1,4 +1,3 @@
-import ChatService
 import Foundation
 import OpenAIService
 import SuggestionModel

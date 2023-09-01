@@ -1,4 +1,3 @@
-import ChatService
 import Environment
 import Foundation
 import GitHubCopilotService
@@ -399,14 +398,6 @@ extension WindowBaseCommandHandler {
     ) async throws {
         guard !prompt.isEmpty else { return }
 
-        let service = ChatService()
-
-        let result = try await service.handleSingleRoundDialogCommand(
-            systemPrompt: systemPrompt,
-            overwriteSystemPrompt: overwriteSystemPrompt,
-            prompt: prompt
-        )
-
         guard receiveReplyInNotification else { return }
 
         let granted = try await UNUserNotificationCenter.current()
@@ -415,7 +406,7 @@ extension WindowBaseCommandHandler {
         if granted {
             let content = UNMutableNotificationContent()
             content.title = "Reply"
-            content.body = result
+            content.body = ""
             let request = UNNotificationRequest(
                 identifier: "reply",
                 content: content,

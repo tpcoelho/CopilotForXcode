@@ -65,20 +65,6 @@ struct GUI: ReducerProtocol {
                 return .none
 
             case let .sendCustomCommandToActiveChat(command):
-                @Sendable func stopAndHandleCommand(_ tab: ChatGPTChatTab) async {
-                    if tab.service.isReceivingMessage {
-                        await tab.service.stopReceivingMessage()
-                    }
-                    try? await tab.service.handleCustomCommand(command)
-                }
-
-                if let activeTab = state.chatTabGroup.activeChatTab as? ChatGPTChatTab {
-                    return .run { send in
-                        await send(.openChatPanel(forceDetach: false))
-                        await stopAndHandleCommand(activeTab)
-                    }
-                }
-
                 if let chatTab = state.chatTabGroup.tabs.first(where: {
                     guard $0 is ChatGPTChatTab else { return false }
                     return true
@@ -86,14 +72,12 @@ struct GUI: ReducerProtocol {
                     state.chatTabGroup.selectedTabId = chatTab.id
                     return .run { send in
                         await send(.openChatPanel(forceDetach: false))
-                        await stopAndHandleCommand(chatTab)
                     }
                 }
                 let chatTab = ChatGPTChatTab()
                 state.chatTabGroup.tabs.append(chatTab)
                 return .run { send in
                     await send(.openChatPanel(forceDetach: false))
-                    await stopAndHandleCommand(chatTab)
                 }
 
             case .suggestionWidget:

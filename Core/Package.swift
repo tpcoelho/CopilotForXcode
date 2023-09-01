@@ -81,7 +81,6 @@ let package = Package(
                 "Environment",
                 "SuggestionWidget",
                 "AXExtension",
-                "ChatService",
                 "PromptToCodeService",
                 "ServiceUpdateMigration",
                 "UserDefaultsObserver",
@@ -175,25 +174,10 @@ let package = Package(
         .testTarget(name: "PromptToCodeServiceTests", dependencies: ["PromptToCodeService"]),
 
         // MARK: - Chat
-
-        .target(
-            name: "ChatService",
-            dependencies: [
-                "Environment",
-                "XcodeInspector",
-
-                .product(name: "Parsing", package: "swift-parsing"),
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "Preferences", package: "Tool"),
-            ]
-        ),
-        .testTarget(name: "ChatServiceTests", dependencies: ["ChatService"]),
-
         .target(
             name: "ChatTab",
             dependencies: [
                 "SharedUIComponents",
-                "ChatService",
                 .product(name: "OpenAIService", package: "Tool"),
                 .product(name: "Logger", package: "Tool"),
                 .product(name: "MarkdownUI", package: "swift-markdown-ui"),
