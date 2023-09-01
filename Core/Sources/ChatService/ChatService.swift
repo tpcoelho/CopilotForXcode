@@ -1,4 +1,3 @@
-import ChatContextCollector
 import ChatPlugin
 import Combine
 import Foundation
@@ -36,8 +35,7 @@ public final class ChatService: ObservableObject {
         )
         contextController = DynamicContextController(
             memory: memory,
-            functionProvider: functionProvider,
-            contextCollectors: allContextCollectors
+            functionProvider: functionProvider
         )
 
         pluginController.chatService = self

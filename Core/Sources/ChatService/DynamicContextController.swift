@@ -1,4 +1,3 @@
-import ChatContextCollector
 import Foundation
 import OpenAIService
 import Parsing
@@ -6,30 +5,15 @@ import Preferences
 import XcodeInspector
 
 final class DynamicContextController {
-    let contextCollectors: [ChatContextCollector]
     let memory: AutoManagedChatGPTMemory
     let functionProvider: ChatFunctionProvider
 
-    convenience init(
-        memory: AutoManagedChatGPTMemory,
-        functionProvider: ChatFunctionProvider,
-        contextCollectors: ChatContextCollector...
-    ) {
-        self.init(
-            memory: memory,
-            functionProvider: functionProvider,
-            contextCollectors: contextCollectors
-        )
-    }
-
     init(
         memory: AutoManagedChatGPTMemory,
-        functionProvider: ChatFunctionProvider,
-        contextCollectors: [ChatContextCollector]
+        functionProvider: ChatFunctionProvider
     ) {
         self.memory = memory
         self.functionProvider = functionProvider
-        self.contextCollectors = contextCollectors
     }
 
     func updatePromptToMatchContent(systemPrompt: String, content: String) async throws {
@@ -38,17 +22,14 @@ final class DynamicContextController {
         functionProvider.removeAll()
         let language = UserDefaults.shared.value(for: \.chatGPTLanguage)
         let oldMessages = await memory.history
-        let contexts = contextCollectors.compactMap {
-            $0.generateContext(history: oldMessages, scopes: scopes, content: content)
-        }
+
         let contextualSystemPrompt = """
         \(language.isEmpty ? "" : "You must always reply in \(language)")
         \(systemPrompt)
 
-        \(contexts.map(\.systemPrompt).filter { !$0.isEmpty }.joined(separator: "\n\n"))
         """
         await memory.mutateSystemPrompt(contextualSystemPrompt)
-        functionProvider.append(functions: contexts.flatMap(\.functions))
+        functionProvider.append(functions: [])
     }
 }
 

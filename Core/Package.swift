@@ -180,12 +180,8 @@ let package = Package(
             name: "ChatService",
             dependencies: [
                 "ChatPlugin",
-                "ChatContextCollector",
                 "Environment",
                 "XcodeInspector",
-
-                // context collectors
-                "WebChatContextCollector",
 
                 .product(name: "Parsing", package: "swift-parsing"),
                 .product(name: "OpenAIService", package: "Tool"),
@@ -199,16 +195,6 @@ let package = Package(
                 "Environment",
                 .product(name: "OpenAIService", package: "Tool"),
                 .product(name: "Terminal", package: "Tool"),
-            ]
-        ),
-        .target(
-            name: "ChatContextCollector",
-            dependencies: [
-                "Environment",
-                "SuggestionModel",
-                "XcodeInspector",
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "Preferences", package: "Tool"),
             ]
         ),
 
@@ -309,19 +295,6 @@ let package = Package(
         .testTarget(
             name: "GitHubCopilotServiceTests",
             dependencies: ["GitHubCopilotService"]
-        ),
-
-        // MAKR: - Chat Context Collector
-
-        .target(
-            name: "WebChatContextCollector",
-            dependencies: [
-                "ChatContextCollector",
-                .product(name: "LangChain", package: "Tool"),
-                .product(name: "OpenAIService", package: "Tool"),
-                .product(name: "Preferences", package: "Tool"),
-            ],
-            path: "Sources/ChatContextCollectors/WebChatContextCollector"
         ),
     ]
 )
